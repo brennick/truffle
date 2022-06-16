@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import type { Transaction, TransactionReceipt } from "web3-core";
-import type { ProjectDecoder, Log } from "@truffle/decoder";
+import type { ProjectDecoder, Log, Transaction as DecoderTransaction } from "@truffle/decoder";
 import type { LogDecoding, CalldataDecoding } from "@truffle/codec";
 
 export interface UseDecodedTransactionOptions {
@@ -47,7 +47,7 @@ export function useDecodedTransaction({
   }
 
   useEffect(() => {
-    decoder.decodeTransaction(transaction).then(decoding => {
+    decoder.decodeTransaction(transaction as DecoderTransaction).then(decoding => {
       setSummaryState({
         decoding,
         complete: true
