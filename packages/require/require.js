@@ -4,6 +4,7 @@ const Module = require("module");
 const vm = require("vm");
 const originalrequire = require("original-require");
 const expect = require("@truffle/expect");
+const TruffleError = require("@truffle/error");
 const {
   Web3Shim,
   createInterfaceAdapter
@@ -25,7 +26,7 @@ const Require = {
 
     options = Config.default().with(options);
 
-    source = fs.readFileSync(options.file, { encoding: "utf8" });
+    source = _readSource(file);
 
     // Modified from here: https://gist.github.com/anatoliychakkaev/1599423
     const m = new Module(file);
@@ -130,5 +131,30 @@ const Require = {
     }
   }
 };
+
+function _readSource(file) {
+  const source = fs.readFileSync(file, { encoding: "utf8" });
+  const fileExtension = path.extname(file).toLocaleLowerCase();
+  const isTs = [".ts", ".tsx"].includes(fileExtension.toLocaleLowerCase());
+  if (isTs) {
+    try {
+      require("ts-node");
+    } catch {
+      throw new TruffleError(`Attempted to execute script with extension
+        ${fileExtension}, but the 'ts-node' module, or one of its required peers
+        has not been installed.`);
+    }
+    return `
+      require("ts-node/register");
+      e = require("${file}");
+      if (e.default && typeof e.default === "function") {
+        module.exports = e.default;
+      } else {
+        module.exports = e;
+      }
+    `;
+  }
+  return source;
+}
 
 module.exports = Require;

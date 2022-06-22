@@ -27,6 +27,14 @@
   "devDependencies": {
     "mocha": "9.2.2"
   },
+  "peerDependencies": {
+    "ts-node": "*"
+  },
+  "peerDependenciesMeta": {
+    "ts-node": {
+      "optional": true
+    }
+  },
   "keywords": [
     "ethereum",
     "exec",
