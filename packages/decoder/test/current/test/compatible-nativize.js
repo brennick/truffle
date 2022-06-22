@@ -18,9 +18,7 @@ describe("nativize (ethers format)", function () {
 
   before("Create Provider", async function () {
     provider = Ganache.provider({
-      miner: {
-        blockTime: 1
-      },
+      miner: { instamine: "strict" },
       seed: "decoder",
       gasLimit: 7000000,
       logging: { quiet: true }
