@@ -3,14 +3,14 @@
   "scripts": {
     "bootstrap": "npx lerna bootstrap",
     "prepare": "lerna run prepare --stream --concurrency=1 && husky install",
-    "publish-release": "./scripts/publish-release.sh",
-    "publish-dist-tag": "./scripts/publish-dist-tag.sh",
-    "prepare-release": "./scripts/prepare-release.sh",
+    "publish-release": ".\\scripts\\publish-release.sh",
+    "publish-dist-tag": ".\\scripts\\publish-dist-tag.sh",
+    "prepare-release": ".\\scripts\\prepare-release.sh",
     "test": "lerna run test --stream --concurrency=1 -- --colors",
-    "ci": "./scripts/ci.sh",
-    "geth": "./scripts/geth.sh",
+    "ci": ".\\scripts\\ci.sh",
+    "geth": ".\\scripts\\geth.sh",
     "dependency-graph": "lerna-dependency-graph -f pdf -o dependency-graph.pdf",
-    "solc-bump": "node ./scripts/solc-bump.js",
+    "solc-bump": "node .\\scripts\\solc-bump.js",
     "update": "lernaupdate"
   },
   "devDependencies": {
