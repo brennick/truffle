@@ -33,7 +33,7 @@ import { getOptions } from "./constructor/getOptions";
 import { getPrivateKeys } from "./constructor/getPrivateKeys";
 import { getMnemonic } from "./constructor/getMnemonic";
 import type { ChainId, ChainSettings, Hardfork } from "./constructor/types";
-import { signTypedData } from "eth-sig-util";
+import { signTypedData_v4 } from "eth-sig-util";
 
 // Important: do not use debug module. Reason: https://github.com/trufflesuite/truffle/issues/2374#issuecomment-536109086
 
@@ -228,7 +228,7 @@ class HDWalletProvider {
             cb("Account not found");
           }
           const pkey = tmpWallets[from].getPrivateKey();
-          const sig = signTypedData(pkey, { data });
+          const sig = signTypedData_v4(pkey, { data: JSON.parse(data) });
           cb(null, sig);
         }
       })
